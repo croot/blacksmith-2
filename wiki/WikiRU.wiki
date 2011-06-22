@@ -1,3 +1,5 @@
+Для работы бота требуется Python 2.6 (or 2.7), а так же установленная библиотека py-sqlite3.
+
 Чтобы скачать бота вам необходима система контроля версий - Subversion.
 
 Командуйте в консоли:
@@ -48,7 +50,7 @@ HOST = xmpp.ru
 
 # Пароль от аккаунта бота
 
-PASS = ltc-test47
+PASS = *****
 
 [CONFIG]
 
@@ -66,7 +68,7 @@ NICK = Black-2
 
 # Jabber ID верховного администратора бота
 
-ADMIN = amin@xmpp.ru
+ADMIN = manbearpig@xmpp.ru
 
 [LIMITS]
 
