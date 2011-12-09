@@ -1,4 +1,0 @@
-executes the specified command and sends answer to private
-private [command] (parameters)
-*/private ping
-bot would send pong-time to private

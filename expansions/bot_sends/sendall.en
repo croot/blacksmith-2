@@ -1,4 +1,0 @@
-bot sends message in to all chats that he serving
-sendall [text]
-*/sendall AAA!!
-bot would send "AAA!!" in to all chats as: [Message from <your nick/resource>:][new line][AAA!!]

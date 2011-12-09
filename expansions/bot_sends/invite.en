@@ -1,4 +1,0 @@
-bot sends invite for specified user
-invite [jid/nick]
-*/invite someone@jabber.ru
-bot would send invite to someone@jabber.ru

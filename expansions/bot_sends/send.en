@@ -1,4 +1,0 @@
-bot sends message in to specified jid
-send [jid] [text]
-*/send chel@jabber.com AAA!!
-bot would send "¿¿¿!!" to chel@jabber.com as: [Message from <your nick/resource>:][new line][¿¿¿!!]

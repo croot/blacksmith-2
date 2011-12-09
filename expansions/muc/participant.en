@@ -1,4 +1,0 @@
-gives participant role
-participant [jid/nick] ([/] [reason])
-*/participant dude
-bot would make dude a participant

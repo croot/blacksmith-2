@@ -1,4 +1,0 @@
-bot sends message in to jid of main admin
-toadmin [text]
-*/toadmin AAA!!
-bot would send "AAA!!" in to admin's jid
