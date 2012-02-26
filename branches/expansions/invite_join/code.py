@@ -1,8 +1,8 @@
 # coding: utf-8
 
 #  BlackSmith mark.2
-exp_name = "invite_join" # /code.py v.x3
-#  Id: 08~2a
+exp_name = "invite_join" # /code.py v.x4
+#  Id: 08~3a
 #  Code © (2009-2011) by WitcherGeralt [WitcherGeralt@rocketmail.com]
 
 expansion_register(exp_name)
@@ -102,10 +102,11 @@ def get_invite(stanza, isConf, ltype, source, body, isToBs, disp):
 									Chats[conf].load_all()
 									Chats[conf].join()
 									Chat_check(conf)
-									if Chats.has_key(conf) and Chats[conf].IamHere:
-										Msend(conf, ControlAnsBase[7] % (ProdName, inst), disp_)
-									else:
-										Chats[conf].full_leave()
+									if Chats.has_key(conf):
+										if Chats[conf].IamHere:
+											Msend(conf, ControlAnsBase[7] % (ProdName, inst), disp_)
+										else:
+											Chats[conf].full_leave()
 						break
 
 expansions[exp_name].ls.append(get_invite.func_name)
