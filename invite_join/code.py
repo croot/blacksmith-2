@@ -24,7 +24,7 @@ class expansion_temp(expansion):
 	def get_invite(self, stanza, isConf, ltype, source, body, isToBs, disp):
 		if not isConf and "normal" == stanza.getType():
 			conf = source[1].lower()
-			if conf.count("@conference.") and conf.count(".") >= 2:
+			if conf.count("@") and conf.count(".") >= 2:
 				for Node in stanza.getTags("x", namespace = xmpp.NS_MUC_USER):
 					for Node in Node.getTags("invite"):
 						inst = (Node.getAttr("from"))
