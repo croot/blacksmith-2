@@ -1,8 +1,8 @@
 # coding: utf-8
 
 #  BlackSmith mark.2
-exp_name = "invite_join" # /code.py v.x5
-#  Id: 08~4b
+exp_name = "invite_join" # /code.py v.x6
+#  Id: 08~5b
 #  Code © (2009-2012) by WitcherGeralt [alkorgun@gmail.com]
 
 expansion_register(exp_name)
@@ -66,7 +66,7 @@ class expansion_temp(expansion):
 												if len(x) == 2 and x[1]:
 													codename = x[1]
 									if GodName != inst:
-										delivery(ControlAnsBase[0] % (inst, inst, conf))
+										delivery(self.AnsBase[0] % (inst, inst, conf))
 									if not disp_:
 										disp_ = IdleClient()
 									Chats[conf] = sConf(conf, disp_, codename, cPref, nick)
@@ -74,7 +74,7 @@ class expansion_temp(expansion):
 									Chats[conf].join()
 									self.Chat_check(conf)
 									if Chats.has_key(conf) and Chats[conf].IamHere:
-										Msend(conf, ControlAnsBase[7] % (ProdName, inst), disp_)
+										Msend(conf, self.AnsBase[1] % (ProdName, inst), disp_)
 									else:
 										Chats[conf].full_leave()
 							else:
@@ -108,14 +108,14 @@ class expansion_temp(expansion):
 										disp_ = IdleClient()
 									if disp_:
 										if GodName != inst:
-											delivery(ControlAnsBase[0] % (inst, inst, conf))
+											delivery(self.AnsBase[0] % (inst, inst, conf))
 										Chats[conf] = sConf(conf, disp_)
 										Chats[conf].load_all()
 										Chats[conf].join()
 										self.Chat_check(conf)
 										if Chats.has_key(conf):
 											if Chats[conf].IamHere:
-												Msend(conf, ControlAnsBase[7] % (ProdName, inst), disp_)
+												Msend(conf, self.AnsBase[1] % (ProdName, inst), disp_)
 											else:
 												Chats[conf].full_leave()
 							break
