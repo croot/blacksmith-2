@@ -74,7 +74,7 @@ class expansion_temp(expansion):
 									Chats[conf].join()
 									self.Chat_check(conf)
 									if Chats.has_key(conf) and Chats[conf].IamHere:
-										Msend(conf, self.AnsBase[1] % (ProdName, inst), disp_)
+										Message(conf, self.AnsBase[1] % (ProdName, inst), disp_)
 									else:
 										Chats[conf].full_leave()
 							else:
@@ -115,7 +115,7 @@ class expansion_temp(expansion):
 										self.Chat_check(conf)
 										if Chats.has_key(conf):
 											if Chats[conf].IamHere:
-												Msend(conf, self.AnsBase[1] % (ProdName, inst), disp_)
+												Message(conf, self.AnsBase[1] % (ProdName, inst), disp_)
 											else:
 												Chats[conf].full_leave()
 							break
