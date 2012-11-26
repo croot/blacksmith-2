@@ -17,7 +17,7 @@ class expansion_temp(expansion):
 		while Chats.has_key(conf):
 			if Chats[conf].IamHere != None:
 				break
-			time.sleep(.4)
+			sleep(0.4)
 			if Numb.plus() >= 50:
 				break
 

@@ -39,7 +39,7 @@ class expansion_temp(expansion):
 					iq.setID("Bs-i%d" % Info["outiq"].plus())
 					CallForResponse(disp, iq, self.answer_disco_search_start, {"chats": chats, "count": count, "ltype": ltype, "source": source, "body": sub_desc(body, self.eqMap)})
 					for x in xrange(600):
-						time.sleep(0.2)
+						sleep(0.2)
 						if not self.busy:
 							answer = self.AnsBase[1] % server
 							break
@@ -75,7 +75,7 @@ class expansion_temp(expansion):
 						iq.setID("Bs-i%d" % Info["outiq"].plus())
 						iters = control(iters + 1)
 						CallForResponse(cls[iters], iq, self.answer_disco_search, {"chats": chats, "count": count, "chat": chat, "body": body})
-						time.sleep(0.12)
+						sleep(0.12)
 		else:
 			self.busy = False
 
