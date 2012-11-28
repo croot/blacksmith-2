@@ -1,11 +1,9 @@
 # coding: utf-8
 
 #  BlackSmith mark.2
-exp_name = "search" # /code.py v.x1
-#  Id: 33~1b
+# exp_name = "search" # /code.py v.x1
+#  Id: 33~1c
 #  Code © (2012) by WitcherGeralt [alkorgun@gmail.com]
-
-expansion_register(exp_name)
 
 class expansion_temp(expansion):
 
@@ -22,22 +20,24 @@ class expansion_temp(expansion):
 
 	del CharsCY, CharsLA
 
-	def command_disco_search(self, ltype, source, body, disp):
+	XEPs.add(xmpp.NS_DISCO_ITEMS)
+
+	def command_disco_search(self, stype, source, body, disp):
 		if body:
 			body = body.split(None, 1)
 			if len(body) == 2:
 				if not self.busy:
 					self.busy = True
 					self.date = time.time()
-					Answer(self.AnsBase[0], ltype, source, disp)
+					Answer(self.AnsBase[0], stype, source, disp)
 					server, body = body
 					server, body = server.lower(), body.lower()
 					chats = itypes.Number()
 					count = []
 					iq = xmpp.Iq(to = server, typ = Types[10])
-					iq.addChild(Types[18], {}, [], xmpp.NS_DISCO_ITEMS)
+					iq.addChild(Types[18], namespace = xmpp.NS_DISCO_ITEMS)
 					iq.setID("Bs-i%d" % Info["outiq"].plus())
-					CallForResponse(disp, iq, self.answer_disco_search_start, {"chats": chats, "count": count, "ltype": ltype, "source": source, "body": sub_desc(body, self.eqMap)})
+					CallForResponse(disp, iq, self.answer_disco_search_start, {"chats": chats, "count": count, "stype": stype, "source": source, "body": sub_desc(body, self.eqMap)})
 					for x in xrange(600):
 						sleep(0.2)
 						if not self.busy:
@@ -55,10 +55,10 @@ class expansion_temp(expansion):
 				answer = AnsBase[2]
 		else:
 			answer = AnsBase[1]
-		if locals().has_key(Types[12]):
-			Answer(answer, ltype, source, disp)
+		if locals().has_key(Types[6]):
+			Answer(answer, stype, source, disp)
 
-	def answer_disco_search_start(self, disp, stanza, chats, count, ltype, source, body):
+	def answer_disco_search_start(self, disp, stanza, chats, count, stype, source, body):
 		if xmpp.isResultNode(stanza):
 			cls = [dr for dr in Clients.values() if dr.isConnected()] or [disp]
 			cllen = len(cls)
@@ -71,7 +71,7 @@ class expansion_temp(expansion):
 					chat = node.getAttr("jid")
 					if chat:
 						iq = xmpp.Iq(to = chat, typ = Types[10])
-						iq.addChild(Types[18], {}, [], xmpp.NS_DISCO_ITEMS)
+						iq.addChild(Types[18], namespace = xmpp.NS_DISCO_ITEMS)
 						iq.setID("Bs-i%d" % Info["outiq"].plus())
 						iters = control(iters + 1)
 						CallForResponse(cls[iters], iq, self.answer_disco_search, {"chats": chats, "count": count, "chat": chat, "body": body})
