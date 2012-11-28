@@ -1,18 +1,16 @@
 # coding: utf-8
 
 #  BlackSmith mark.2
-exp_name = "invite_join" # /code.py v.x6
-#  Id: 08~5b
+# exp_name = "invite_join" # /code.py v.x6
+#  Id: 08~5c
 #  Code © (2009-2012) by WitcherGeralt [alkorgun@gmail.com]
-
-expansion_register(exp_name)
 
 class expansion_temp(expansion):
 
 	def __init__(self, name):
 		expansion.__init__(self, name)
 
-	def Chat_check(self, conf):
+	def Check(self, conf):
 		Numb = itypes.Number()
 		while Chats.has_key(conf):
 			if Chats[conf].IamHere != None:
@@ -21,13 +19,13 @@ class expansion_temp(expansion):
 			if Numb.plus() >= 50:
 				break
 
-	def get_invite(self, stanza, isConf, ltype, source, body, isToBs, disp):
-		if not isConf and "normal" == stanza.getType():
+	def get_invite(self, stanza, isConf, stype, source, body, isToBs, disp):
+		if not isConf and Types[2] == stanza.getType():
 			conf = source[1].lower()
 			if conf.count("@") and conf.count(".") >= 2:
-				for Node in stanza.getTags("x", namespace = xmpp.NS_MUC_USER):
-					for Node in Node.getTags("invite"):
-						inst = (Node.getAttr("from"))
+				for node in stanza.getTags("x", namespace = xmpp.NS_MUC_USER):
+					for node in node.getTags("invite"):
+						inst = (node.getAttr("from"))
 						if inst:
 							inst = (inst.split(chr(47)))[0].lower()
 							if enough_access(inst, None, 7):
@@ -72,7 +70,7 @@ class expansion_temp(expansion):
 									Chats[conf] = sConf(conf, disp_, codename, cPref, nick)
 									Chats[conf].load_all()
 									Chats[conf].join()
-									self.Chat_check(conf)
+									self.Check(conf)
 									if Chats.has_key(conf) and Chats[conf].IamHere:
 										Message(conf, self.AnsBase[1] % (ProdName, inst), disp_)
 									else:
@@ -112,7 +110,7 @@ class expansion_temp(expansion):
 										Chats[conf] = sConf(conf, disp_)
 										Chats[conf].load_all()
 										Chats[conf].join()
-										self.Chat_check(conf)
+										self.Check(conf)
 										if Chats.has_key(conf):
 											if Chats[conf].IamHere:
 												Message(conf, self.AnsBase[1] % (ProdName, inst), disp_)
