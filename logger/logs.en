@@ -1,0 +1,4 @@
+chatlogs
+logs [year] [month] [day] [hour]
+*/logs 2012 12 02 06
+bot would show the logs of the current conference at 06-07 hours of 02.12.2012 (UTC)
