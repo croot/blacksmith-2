@@ -1,0 +1,10 @@
+global logger's controller
+logger2 (on/off) / ([folder] [path])
+*/logger2
+bot would show logger's state
+*/logger2 off
+bot would disable logger totally
+*/logger2 on
+bot would enable logger
+*/logger2 folder /home/xmpp/chatlogs
+bot would set "/home/xmpp/chatlogs" as a root directory of the logger (all data copies)

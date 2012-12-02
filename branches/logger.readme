@@ -1,0 +1,26 @@
+
+To make web pages with chatlogs, you will need to connect chatlogs sqlite3
+databases (%chat@server%.db) and get data by command:
+'select * from chatlogs where year=? and month=? and day=? order by year, month, day, time'
+
+Chatlogs table columns:
+0) year - integer
+1) month - integer
+2) day - integer
+3) time - text (like 23:30:20)
+4) nick - text (nick of party event. may be null)
+5) jid - text (jid of party event. may be null)
+6) data - text (event description)
+7) mode - integer (type of the event)
+
+Types of the events (mode):
+1 - message
+2 - /me ...
+3 - chat's subject
+4 - join
+5 - leave
+6 - nick change
+7 - role change
+8 - status change
+9 - kick
+10 - ban
