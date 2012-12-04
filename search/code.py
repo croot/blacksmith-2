@@ -1,8 +1,8 @@
 # coding: utf-8
 
 #  BlackSmith mark.2
-# exp_name = "search" # /code.py v.x1
-#  Id: 33~1c
+# exp_name = "search" # /code.py v.x2
+#  Id: 33~2c
 #  Code © (2012) by WitcherGeralt [alkorgun@gmail.com]
 
 class expansion_temp(expansion):
@@ -38,7 +38,7 @@ class expansion_temp(expansion):
 					iq.addChild(Types[18], namespace = xmpp.NS_DISCO_ITEMS)
 					iq.setID("Bs-i%d" % Info["outiq"].plus())
 					CallForResponse(disp, iq, self.answer_disco_search_start, {"chats": chats, "count": count, "stype": stype, "source": source, "body": sub_desc(body, self.eqMap)})
-					for x in xrange(600):
+					for x in xrange(400):
 						sleep(0.2)
 						if not self.busy:
 							answer = self.AnsBase[1] % server
@@ -50,7 +50,7 @@ class expansion_temp(expansion):
 						else:
 							answer = self.AnsBase[3] % chats._str()
 				else:
-					answer = self.AnsBase[4] % Time2Text(120 - (time.time() - self.date))
+					answer = self.AnsBase[4] % Time2Text(80 - (time.time() - self.date))
 			else:
 				answer = AnsBase[2]
 		else:
@@ -85,7 +85,9 @@ class expansion_temp(expansion):
 			for node in stanza.getQueryChildren():
 				if node and node != "None":
 					name = node.getAttr("name")
-					if name and body in sub_desc(name.lower(), self.eqMap):
-						count.append("%s (%s)" % (chat, name))
+					if name:
+						name = name.strip()
+						if body in sub_desc(name.lower(), self.eqMap):
+							count.append("%s (%s)" % (chat, name))
 
 	commands = ((command_disco_search, "find", 2,),)

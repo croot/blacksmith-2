@@ -1,8 +1,8 @@
 # coding: utf-8
 
 #  BlackSmith mark.2
-# exp_name = "logger" # /code.py v.x5
-#  Id: 30~5c
+# exp_name = "logger" # /code.py v.x6
+#  Id: 30~6c
 #  Code © (2011-2012) by WitcherGeralt [alkorgun@gmail.com]
 
 class expansion_temp(expansion):
@@ -10,7 +10,7 @@ class expansion_temp(expansion):
 	def __init__(self, name):
 		expansion.__init__(self, name)
 
-	On = False
+	On = True
 
 	RootDir = "chatlogs"
 	ConfigFile = dynamic % ("logger.db")
@@ -49,7 +49,11 @@ class expansion_temp(expansion):
 		if self.enabled(source[1]) and isConf and stype == Types[1] and not isToBs and source[2]:
 			instance = get_source(source[1], source[2]) or None
 			nick = source[2].strip()
-			mode = (2 if body.startswith("/me") else 1)
+			if body.startswith("/me") and len(body) > 3:
+				body = body[3:].lstrip()
+				mode = 2
+			else:
+				mode = 1
 			self.addEvent(source[1], nick, instance, self.sub_adds(body), mode)
 
 	def logger_09eh(self, chat, nick, subject, body, disp):
@@ -70,7 +74,7 @@ class expansion_temp(expansion):
 			instance = get_source(chat, nick) or None
 			nick = nick.strip()
 			mode = self.leaveModes.get(scode, 5)
-			self.addEvent(chat, nick, instance, xmpp.XMLescape(object_encode(str(body).strip())), mode)
+			self.addEvent(chat, nick, instance, xmpp.XMLescape(object_encode(body).strip()), mode)
 
 	def logger_06eh(self, chat, old_nick, nick, disp):
 		if self.enabled(chat) and nick != get_nick(chat):
@@ -266,7 +270,7 @@ class expansion_temp(expansion):
 				try:
 					os.makedirs(self.RootDir, 0755)
 				except:
-					Print("\n\nCan't make logger's base folder! I'll disable expansion.", color2)
+					Print("\n\nCan't make logger's root folder! I'll disable expansion.", color2)
 					self.dels(True)
 
 	def logger_01si(self, chat, enable = False):
