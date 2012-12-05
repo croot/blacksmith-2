@@ -119,7 +119,7 @@ class expansion_temp(expansion):
 						if all((isNumber(year), isNumber(month), isNumber(day), isNumber(hour))):
 							hour = int(hour)
 							if -1 < hour < 24:
-								year, month, day, hour = int(year), int(month), int(day), "{:02}".format(hour)
+								year, month, day, hour = int(year), int(month), int(day), "{0:02}".format(hour)
 								with self.loggerDesc[source[1]]:
 									with database(ChatsAttrs[source[1]]["ldir"]) as db:
 										db("select * from chatlogs where year=? and month=? and day=? order by year, month, day, time", (year, month, day))
