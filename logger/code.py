@@ -270,7 +270,7 @@ class expansion_temp(expansion):
 				try:
 					os.makedirs(self.RootDir, 0755)
 				except:
-					Print("\n\nCan't make logger's root folder! I'll disable expansion.", color2)
+					Print("\n\nCan't make logger's root folder! I'll disable the expansion.", color2)
 					self.dels(True)
 
 	def logger_01si(self, chat, enable = False):

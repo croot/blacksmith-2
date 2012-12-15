@@ -24,6 +24,7 @@ class expansion_temp(expansion):
 
 	def command_disco_search(self, stype, source, body, disp):
 		if body:
+			body = body.lower()
 			body = body.split(None, 1)
 			if len(body) == 2:
 				if not self.busy:
@@ -31,7 +32,6 @@ class expansion_temp(expansion):
 					self.date = time.time()
 					Answer(self.AnsBase[0], stype, source, disp)
 					server, body = body
-					server, body = server.lower(), body.lower()
 					chats = itypes.Number()
 					count = []
 					iq = xmpp.Iq(to = server, typ = Types[10])

@@ -1,4 +1,4 @@
 search of users in conferences by nick
-find [muc_server] [user's_nick]
-*/find conference.jabber.ru mrDude
+{command} [muc_server] [user's_nick]
+*/{command} conference.jabber.ru mrDude
 bot would search user with nick "mrDude" at conference.jabber.ru
