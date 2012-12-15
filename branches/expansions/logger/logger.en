@@ -1,8 +1,8 @@
 chat logger's controller
-logger (on/off)
-*/logger
+{command} (on/off)
+*/{command}
 bot would show logger's state
-*/logger off
+*/{command} off
 bot would disable logger of the current conference
-*/logger on
+*/{command} on
 bot would enable logger of the current conference
