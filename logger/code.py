@@ -1,8 +1,8 @@
 # coding: utf-8
 
 #  BlackSmith mark.2
-# exp_name = "logger" # /code.py v.x6
-#  Id: 30~6c
+# exp_name = "logger" # /code.py v.x7
+#  Id: 30~7c
 #  Code © (2011-2012) by WitcherGeralt [alkorgun@gmail.com]
 
 class expansion_temp(expansion):
@@ -69,12 +69,12 @@ class expansion_temp(expansion):
 			nick = nick.strip()
 			self.addEvent(chat, nick, instance, ("%s/%s" % role), 4)
 
-	def logger_05eh(self, chat, nick, body, scode, disp):
+	def logger_05eh(self, chat, nick, status, scode, disp):
 		if self.enabled(chat) and nick != get_nick(chat):
 			instance = get_source(chat, nick) or None
 			nick = nick.strip()
 			mode = self.leaveModes.get(scode, 5)
-			self.addEvent(chat, nick, instance, xmpp.XMLescape(object_encode(body).strip()), mode)
+			self.addEvent(chat, nick, instance, xmpp.XMLescape(object_encode(status).strip()), mode)
 
 	def logger_06eh(self, chat, old_nick, nick, disp):
 		if self.enabled(chat) and nick != get_nick(chat):
@@ -114,8 +114,9 @@ class expansion_temp(expansion):
 		if Chats.has_key(source[1]):
 			if self.On:
 				if self.loggerDesc.has_key(source[1]):
-					if body:
-						year, month, day, hour = body.split()[:4]
+					body = body.split()
+					if len(body) == 4:
+						year, month, day, hour = body
 						if all((isNumber(year), isNumber(month), isNumber(day), isNumber(hour))):
 							hour = int(hour)
 							if -1 < hour < 24:
@@ -171,7 +172,7 @@ class expansion_temp(expansion):
 						else:
 							answer = AnsBase[30]
 					else:
-						answer = AnsBase[1]
+						answer = AnsBase[2 if body else 1]
 				else:
 					answer = self.AnsBase[0]
 			else:
