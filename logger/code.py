@@ -1,8 +1,8 @@
 # coding: utf-8
 
 #  BlackSmith mark.2
-# exp_name = "logger" # /code.py v.x7
-#  Id: 30~7c
+# exp_name = "logger" # /code.py v.x8
+#  Id: 30~8c
 #  Code © (2011-2012) by WitcherGeralt [alkorgun@gmail.com]
 
 class expansion_temp(expansion):
@@ -293,6 +293,8 @@ class expansion_temp(expansion):
 					with database(ldir) as db:
 						db("create table chatlogs (year integer, month integer, day integer, time text, nick text, jid text, data text, mode integer)")
 						db.commit()
+				if not ChatsAttrs.has_key(chat):
+					ChatsAttrs[chat] = {}
 				ChatsAttrs[chat]["ldir"], self.loggerDesc[chat] = ldir, iThr.Semaphore()
 
 	def logger_04si(self, chat):
