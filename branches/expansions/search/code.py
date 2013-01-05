@@ -34,7 +34,7 @@ class expansion_temp(expansion):
 					server, body = body
 					chats = itypes.Number()
 					count = []
-					iq = xmpp.Iq(to = server, typ = Types[10])
+					iq = xmpp.Iq(Types[10], to = server)
 					iq.addChild(Types[18], namespace = xmpp.NS_DISCO_ITEMS)
 					iq.setID("Bs-i%d" % Info["outiq"].plus())
 					CallForResponse(disp, iq, self.answer_disco_search_start, {"chats": chats, "count": count, "stype": stype, "source": source, "body": sub_desc(body, self.eqMap)})
@@ -70,7 +70,7 @@ class expansion_temp(expansion):
 				if node and node != "None":
 					chat = node.getAttr("jid")
 					if chat:
-						iq = xmpp.Iq(to = chat, typ = Types[10])
+						iq = xmpp.Iq(Types[10], to = chat)
 						iq.addChild(Types[18], namespace = xmpp.NS_DISCO_ITEMS)
 						iq.setID("Bs-i%d" % Info["outiq"].plus())
 						iters = control(iters + 1)
