@@ -53,7 +53,7 @@ class expansion_temp(expansion):
 			filename = "%s/%s" % (folder, date)
 			if os.path.isfile(filename):
 				Info["omsg"].plus()
-				Chats[conf].subject(xmpp.XMLescape(get_file(filename).decode("utf-8")))
+				Chats[conf].subject(get_file(filename).decode("utf-8"))
 				answer.append(self.AnsBase[9] % time.ctime(date))
 			else:
 				answer.append(self.AnsBase[0])

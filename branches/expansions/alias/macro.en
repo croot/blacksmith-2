@@ -1,0 +1,6 @@
+getting the help of macro or macro-list
+{command} (name_of_macro)
+*/{command} poke
+bot would show help of "poke" (unless, of course, help was added)
+*/{command}
+bot would show the list of all available macro
