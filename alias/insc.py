@@ -19,7 +19,7 @@ if DefLANG in ("RU", "UA"):
 		"Количество условий, переменных, значений и наборов флагов не совпадает!", # 14
 		"Количество условий не может превышать 8.", # 15
 		"Использовать регулярные выражения может только суперадмин.", # 16
-		"null", # 17
+		"Название «%s» занято командой.", # 17
 		"Значение роли неверно!", # 18
 		"Тип сообщения некорректен!", # 19
 		"Отсутствует условие!", # 20
@@ -53,7 +53,7 @@ else:
 		"Number of conditions, variables, clauses and a set of flags is not the same!", # 14
 		"Number of conditions may not exceed 8.", # 15
 		"Use regular expressions can only superadmin.", # 16
-		"null", # 17
+		"Name '%s' occupied by the command.", # 17
 		"The role of incorrect!", # 18
 		"The message type is invalid!", # 19
 		"No clause!", # 20
