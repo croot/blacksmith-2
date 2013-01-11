@@ -493,7 +493,6 @@ class expansion_temp(expansion):
 				answer = self.AnsBase[4]
 		elif body:
 			body = body.split(None, 3)
-			del arg0
 			if len(body) >= 3:
 				arg0 = (body.pop(0)).lower()
 				alias = (body.pop(0)).lower()
@@ -527,36 +526,39 @@ class expansion_temp(expansion):
 						if body:
 							body = body[0]
 							if event == self.macro:
-								body = body.split(None, 1)
-								command = (body.pop(0)).lower()
-								if command in Cmds:
-									if enough_access(source[1], source[2], (8 if command in self.get_names() else Cmds[command].access)):
-										if glob or alias not in self.AliasDesc[self.macro]:
-											if body:
-												body = body[0]
-											else:
-												body = ""
-											if 1536 >= len(body):
-												if self.checkParameters(body, self.macro):
-													access = get_access(source[1], source[2])
-													if access < 8:
-														cmds = [temp.name for temp in Cmds.itervalues() if temp.access > access]
-													if access < 8 and any([temp in cmds or temp in self.get_names() for temp in (body.lower()).split()]):
-														answer = self.AnsBase[27]
-													else:
-														desc[self.macro][alias] = (command, body, Cmds[command].access)
-														self.save_alias(glob, source[1])
-														answer = AnsBase[4]
+								if alias not in Cmds:
+									body = body.split(None, 1)
+									command = (body.pop(0)).lower()
+									if command in Cmds:
+										if enough_access(source[1], source[2], (8 if command in self.get_names() else Cmds[command].access)):
+											if glob or alias not in self.AliasDesc[self.macro]:
+												if body:
+													body = body[0]
 												else:
-													answer = self.AnsBase[8]
+													body = ""
+												if 1536 >= len(body):
+													if self.checkParameters(body, self.macro):
+														access = get_access(source[1], source[2])
+														if access < 8:
+															cmds = [temp.name for temp in Cmds.itervalues() if temp.access > access]
+														if access < 8 and any([temp in cmds or temp in self.get_names() for temp in (body.lower()).split()]):
+															answer = self.AnsBase[27]
+														else:
+															desc[self.macro][alias] = (command, body, Cmds[command].access)
+															self.save_alias(glob, source[1])
+															answer = AnsBase[4]
+													else:
+														answer = self.AnsBase[8]
+												else:
+													answer = AnsBase[5]
 											else:
-												answer = AnsBase[5]
+												answer = self.AnsBase[9]
 										else:
-											answer = self.AnsBase[9]
+											answer = AnsBase[10]
 									else:
-										answer = AnsBase[10]
+										answer = AnsBase[6]
 								else:
-									answer = AnsBase[6]
+									answer = self.AnsBase[17] % (alias)
 							elif event in self.Template:
 								clauses = self.compile_quote.findall(body)
 								if clauses:
