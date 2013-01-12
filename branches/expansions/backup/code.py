@@ -52,7 +52,6 @@ class expansion_temp(expansion):
 			date = max(backups)
 			filename = "%s/%s" % (folder, date)
 			if os.path.isfile(filename):
-				Info["omsg"].plus()
 				Chats[conf].subject(get_file(filename).decode("utf-8"))
 				answer.append(self.AnsBase[9] % time.ctime(date))
 			else:
@@ -83,7 +82,8 @@ class expansion_temp(expansion):
 			date = max(backups)
 			filename = "%s/%s" % (folder, date)
 			if os.path.isfile(filename):
-				if getattr(Chats[conf].get_user(Chats[conf].nick), "role", (None,))[0] != self.affs[0]:
+				Chat = Chats[conf]
+				if getattr(Chat.get_user(Chat.nick), "role", (None,))[0] != self.affs[0]:
 					answer.append(self.AnsBase[18])
 				else:
 					try:
@@ -98,7 +98,7 @@ class expansion_temp(expansion):
 							query = iq.addChild(Types[18], namespace = xmpp.NS_MUC_OWNER)
 							query.addChild(node = form)
 							iq.setID("Bs-i%d" % Info["outiq"].plus())
-							CallForResponse(Chats[conf].disp, iq, self.answer_accept_opts, {"date": date, "stype": stype, "source": source})
+							CallForResponse(Chat.disp, iq, self.answer_accept_opts, {"date": date, "stype": stype, "source": source})
 						else:
 							answer.append(self.AnsBase[16] % Time2Text(3600 - timer))
 			else:

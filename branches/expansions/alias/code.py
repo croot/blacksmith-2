@@ -214,11 +214,11 @@ class expansion_temp(expansion):
 			self.execute(chat, desc, Vars)
 
 	def process(self, chat, event, Vars):
-		iter = self.ChatAliasDesc[chat][event].iteritems()
+		iterator = self.ChatAliasDesc[chat][event].iteritems()
 		chat = Chats[chat]
 		for alias, desc in self.AliasDesc[event].iteritems():
 			self.extract(chat, event, alias, desc, Vars)
-		for alias, desc in iter:
+		for alias, desc in iterator:
 			self.extract(chat, event, alias, desc, Vars)
 
 	def alias_01eh(self, stanza, isConf, stype, source, body, isToBs, disp):
