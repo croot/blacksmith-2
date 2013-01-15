@@ -1,9 +1,9 @@
 # coding: utf-8
 
 #  BlackSmith mark.2
-# exp_name = "backup" # /code.py v.x1
-#  Id: 36~1c
-#  Code © (2012) by WitcherGeralt [alkorgun@gmail.com]
+# exp_name = "backup" # /code.py v.x2
+#  Id: 36~2c
+#  Code © (2012-2013) by WitcherGeralt [alkorgun@gmail.com]
 
 class expansion_temp(expansion):
 
@@ -389,7 +389,7 @@ class expansion_temp(expansion):
 		sbody = sbody.replace(chr(10), chr(13) + chr(10))
 		sdesc = ChatsAttrs[chat]["backup"]["subjects"]
 		if not sdesc["list"] or sbody != sdesc["last"]:
-			folder = chat_file(chat, self.SubjectsFolder)
+			folder = cefile(chat_file(chat, self.SubjectsFolder))
 			try:
 				if not os.path.isdir(folder): os.makedirs(folder, 0755)
 			except:
