@@ -1,9 +1,9 @@
 # coding: utf-8
 
 #  BlackSmith mark.2
-# exp_name = "alias" # /code.py v.x1 alpha
-#  Id: 35~1c
-#  Code © (2012) by WitcherGeralt [alkorgun@gmail.com]
+# exp_name = "alias" # /code.py v.x2 alpha
+#  Id: 35~2c
+#  Code © (2012-2013) by WitcherGeralt [alkorgun@gmail.com]
 
 class expansion_temp(expansion):
 
@@ -198,7 +198,7 @@ class expansion_temp(expansion):
 				return False
 			if cond == "re":
 				id = str.join(chr(47), (chat, event, alias))
-				if id in Cache:
+				if id in self.Cache:
 					clause = self.Cache[id]
 				else:
 					clause = self.Cache[id] = compile__(clause)
