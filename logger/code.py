@@ -1,9 +1,9 @@
 # coding: utf-8
 
 #  BlackSmith mark.2
-# exp_name = "logger" # /code.py v.x8
-#  Id: 30~8c
-#  Code © (2011-2012) by WitcherGeralt [alkorgun@gmail.com]
+# exp_name = "logger" # /code.py v.x9
+#  Id: 30~9c
+#  Code © (2011-2013) by WitcherGeralt [alkorgun@gmail.com]
 
 class expansion_temp(expansion):
 
@@ -30,8 +30,8 @@ class expansion_temp(expansion):
 
 	def sub_adds(self, body):
 		body = xmpp.XMLescape(body)
-		body = self.compile_link.sub(self.sub_link, body)
 		body = self.compile_chat.sub(self.sub_chat, body)
+		body = self.compile_link.sub(self.sub_link, body)
 		return body
 
 	def addEvent(self, chat, nick, jid, data, mode):
@@ -123,7 +123,7 @@ class expansion_temp(expansion):
 								year, month, day, hour = int(year), int(month), int(day), "{0:02}".format(hour)
 								with self.loggerDesc[source[1]]:
 									with database(ChatsAttrs[source[1]]["ldir"]) as db:
-										db("select * from chatlogs where year=? and month=? and day=? order by year, month, day, time", (year, month, day))
+										db("select * from chatlogs where year=? and month=? and day=? order by time", (year, month, day))
 										logs = db.fetchall()
 								if logs:
 									ls = []
