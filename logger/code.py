@@ -1,8 +1,8 @@
 # coding: utf-8
 
 #  BlackSmith mark.2
-# exp_name = "logger" # /code.py v.x9
-#  Id: 30~9c
+# exp_name = "logger" # /code.py v.x10
+#  Id: 30~10c
 #  Code © (2011-2013) by WitcherGeralt [alkorgun@gmail.com]
 
 class expansion_temp(expansion):
@@ -16,13 +16,14 @@ class expansion_temp(expansion):
 	ConfigFile = dynamic % ("logger.db")
 	ChatConfigFile = "logger.db"
 	ChatsCache = "ChatsCache.dict"
+	ChatsPasswords = "ChatsPasswords.dict"
 
 	loggerDesc = {}
 	leaveModes = {sCodes[2]: 9, sCodes[0]: 10}
 
 	escapeTabs = lambda self, body: sub_desc(body, ((chr(10), "<br>"), (chr(9), "&#9;")))
 
-	compile_link = compile__("((?:http[s]?|ftp|svn)://[^\s'\"<>]+)")
+	compile_link = compile__("((?:http[s]?|ftp|svn)://[^\s'\"@<>]+)")
 	compile_chat = compile__("([^\s]+?@(?:conference|muc|chat|room)\.[\w-]+?\.[\.\w-]+)")
 
 	sub_link = lambda self, obj: "<a href=\"{0}\">{0}</a>".format(obj.group(1))
@@ -43,7 +44,7 @@ class expansion_temp(expansion):
 				db("insert into chatlogs values (?,?,?,?,?,?,?,?)", (year, month, day, st, nick, jid, self.escapeTabs(data), mode))
 				db.commit()
 
-	enabled = lambda self, chat: self.On and self.loggerDesc.has_key(chat)
+	enabled = lambda self, chat: self.On and (chat in self.loggerDesc)
 
 	def logger_01eh(self, stanza, isConf, stype, source, body, isToBs, disp):
 		if self.enabled(source[1]) and isConf and stype == Types[1] and not isToBs and source[2]:
@@ -181,11 +182,29 @@ class expansion_temp(expansion):
 			answer = AnsBase[0]
 		Answer(answer, stype, source, disp)
 
+	def setPassword(self, chat, password = None):
+		filename = os.path.join(self.RootDir, self.ChatsPasswords)
+		if initialize_file(filename):
+			desc = eval(get_file(filename))
+			if password:
+				desc[chat] = password
+				answer = self.AnsBase[4] % (password)
+			elif chat not in desc:
+				return self.AnsBase[5]
+			else:
+				del desc[chat]
+				answer = self.AnsBase[6]
+			cat_file(filename, str(desc))
+		else:
+			answer = AnsBase[7]
+		return answer
+
 	def command_logger_state(self, stype, source, body, disp):
 		if Chats.has_key(source[1]):
 			if self.On:
 				if body:
-					body = body.lower()
+					ls = body.split(None, 1)
+					body = (ls.pop(0)).lower()
 					if body in ("on", "1", "вкл".decode("utf-8")):
 						if not self.loggerDesc.has_key(source[1]):
 							self.logger_01si(source[1], True)
@@ -199,10 +218,20 @@ class expansion_temp(expansion):
 							answer = AnsBase[4]
 						else:
 							answer = self.AnsBase[0]
+					elif body in ("password", "пароль".decode("utf-8")):
+						if ls:
+							answer = self.setPassword(source[1], ls[0][:16].strip())
+						else:
+							answer = self.setPassword(source[1])
 					else:
 						answer = AnsBase[2]
 				else:
-					answer = self.AnsBase[int(self.loggerDesc.has_key(source[1]))]
+					filename = os.path.join(self.RootDir, self.ChatsPasswords)
+					if os.path.isfile(filename):
+						desc = eval(get_file(filename))
+						if desc.has_key(source[1]):
+							Message(source[0], self.AnsBase[4] % desc[source[1]])
+					answer = self.AnsBase[int(source[1] in self.loggerDesc)]
 			else:
 				answer = self.AnsBase[2]
 		else:
@@ -299,12 +328,18 @@ class expansion_temp(expansion):
 
 	def logger_04si(self, chat):
 #		if not check_nosimbols(chat):
-#			file = os.path.join(self.RootDir, self.ChatsCache)
-#			if initialize_file(file):
-#				desc = eval(get_file(file))
-#				if desc.has_key(chat):
+#			filename = os.path.join(self.RootDir, self.ChatsCache)
+#			if os.path.isfile(filename):
+#				desc = eval(get_file(filename))
+#				if chat in desc:
 #					del desc[chat]
-#					cat_file(file, str(desc))
+#					cat_file(filename, str(desc))
+#		filename = os.path.join(self.RootDir, self.ChatsPasswords)
+#		if os.path.isfile(filename):
+#			desc = eval(get_file(filename))
+#			if chat in desc:
+#				del desc[chat]
+#				cat_file(filename, str(desc))
 		if self.loggerDesc.has_key(chat):
 			del self.loggerDesc[chat]
 
