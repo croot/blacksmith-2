@@ -24,3 +24,5 @@ Types of the events (mode):
 8 - status change
 9 - kick
 10 - ban
+
+See also: ChatsCache.dict and ChatsPasswords.dict
