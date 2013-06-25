@@ -1,13 +1,14 @@
 # coding: utf-8
 
 #  BlackSmith mark.2
-# exp_name = "logger" # /code.py v.x10
-#  Id: 30~10c
+# exp_name = "logger" # /code.py v.x11
+#  Id: 30~11c
 #  Code © (2011-2013) by WitcherGeralt [alkorgun@gmail.com]
 
 class expansion_temp(expansion):
 
 	def __init__(self, name):
+		check_sqlite()
 		expansion.__init__(self, name)
 
 	On = True
