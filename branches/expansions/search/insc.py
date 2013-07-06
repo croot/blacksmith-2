@@ -12,7 +12,7 @@ else:
 	AnsBase_temp = (
 		"I'll send the results after 80 seconds in private.", # 0
 		"Search at '%s' is not available.", # 1
-		"Checked %d chatrooms, found %d similar nicks:\n%s", # 2
-		"Checked %d chatrooms, but no matches.", # 3
+		"Checked %s chatrooms, found %d similar nicks:\n%s", # 2
+		"Checked %s chatrooms, but no matches.", # 3
 		"Now I'm busy with another search query. Wait %s." # 4
 					)

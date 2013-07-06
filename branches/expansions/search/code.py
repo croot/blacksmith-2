@@ -64,7 +64,7 @@ class expansion_temp(expansion):
 			cllen = len(cls)
 			control = lambda numb: (numb if numb < cllen else 0)
 			iters = 0
-			for node in stanza.getQueryChildren():
+			for node in stanza.getQueryChildren() or ():
 				if not self.busy:
 					break
 				if node and node != "None":
@@ -82,7 +82,7 @@ class expansion_temp(expansion):
 	def answer_disco_search(self, disp, stanza, chats, count, chat, body):
 		if self.busy and xmpp.isResultNode(stanza):
 			chats.plus()
-			for node in stanza.getQueryChildren():
+			for node in stanza.getQueryChildren() or ():
 				if node and node != "None":
 					name = node.getAttr("name")
 					if name:
