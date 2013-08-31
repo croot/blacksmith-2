@@ -18,7 +18,7 @@
 бот будет подмечать полезность ссылки, отправленной в чат
 */{command} access punch 2
 бот установит доступ 2 для макро "punch"
-*/{command} help punch comic command to alert an user
+*/{command} help punch add comic command to alert an user
 бот добавит хелп для макро "punch"
 */{command} help punch clear
 бот удалит хелп
