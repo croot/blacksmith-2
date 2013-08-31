@@ -18,7 +18,7 @@ bot would add local macro named "punch" for the command "echo"
 bot would notice the usefulness of a link sent to the chat
 */{command} access punch 2
 bot would set access 2 for macro "punch"
-*/{command} help punch comic command to alert an user
+*/{command} help punch add comic command to alert an user
 bot would add a help for macro "punch"
 */{command} help punch clear
 bot would delete a help
