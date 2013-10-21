@@ -80,11 +80,11 @@ about args of alias:
 
 you can insert an alias corresponding variables into parameters. do so at the expense of the syntax - "%(var_name)s".
 you can also insert a random value. the syntax:
-	&rand(1, 9) - random number from a specified range, where 1 - start, and 9 - the end
-	&rand([option one||option two]) - random selection from a list of options (options must be separated by "||")
-	&rand_user - inserting nick of random user of the conference (each use of this option will insert a new nick)
+	$rand(1, 9) - random number from a specified range, where 1 - start, and 9 - the end
+	$rand([option one||option two]) - random selection from a list of options (options must be separated by "||")
+	$rand_user - inserting nick of random user of the conference (each use of this option will insert a new nick)
 
-all this can be combined, for example: some text &rand([&rand(11, 21) some text||some text %(nick)s||&rand_user some text||some text])
+all this can be combined, for example: some text $rand([$rand(11, 21) some text||some text %(nick)s||$rand_user some text||some text])
 
 variables to insert into the text of the macro: nick, jid, role, stype,
 	aff - affiliation of the user,
