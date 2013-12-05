@@ -25,7 +25,7 @@ class expansion_temp(expansion):
 	escapeTabs = lambda self, body: sub_desc(body, ((chr(10), "<br>"), (chr(9), "&#9;")))
 
 	compile_link = compile__("((?:http[s]?|ftp|svn)://[^\s'\"@<>]+)")
-	compile_chat = compile__("([^\s]+?@(?:conference|muc|chat|room)\.[\w-]+?\.[\.\w-]+)")
+	compile_chat = compile__("([^\s]+?@(?:conference|muc|conf|chat|group)\.[\w-]+?\.[\.\w-]+)")
 
 	sub_link = lambda self, obj: "<a href=\"{0}\">{0}</a>".format(obj.group(1))
 	sub_chat = lambda self, obj: "<a href=\"xmpp:{0}?join\">{0}</a>".format(obj.group(1))
@@ -48,7 +48,7 @@ class expansion_temp(expansion):
 	enabled = lambda self, chat: self.On and (chat in self.loggerDesc)
 
 	def logger_01eh(self, stanza, isConf, stype, source, body, isToBs, disp):
-		if self.enabled(source[1]) and isConf and stype == Types[1] and not isToBs and source[2]:
+		if self.enabled(source[1]) and isConf and stype == sBase[1] and not isToBs and source[2]:
 			instance = get_source(source[1], source[2]) or None
 			nick = source[2].strip()
 			if body.startswith("/me") and len(body) > 3:
@@ -162,7 +162,7 @@ class expansion_temp(expansion):
 										ls.append(line % vars())
 									if ls:
 										answer = str.join(chr(10), ls)
-										if stype == Types[1]:
+										if stype == sBase[1]:
 											Message(source[0], answer, disp)
 											answer = AnsBase[11]
 									else:
@@ -252,7 +252,7 @@ class expansion_temp(expansion):
 					for chat in Chats.keys():
 						self.logger_01si(chat)
 					for inst, ls in self.handlers:
-						self.handler_register(getattr(self, inst.func_name), ls)
+						self.handler_register(getattr(self, inst.__name__), ls)
 					answer = AnsBase[4]
 				else:
 					answer = self.AnsBase[1]
@@ -260,7 +260,7 @@ class expansion_temp(expansion):
 				if self.On:
 					self.On = False
 					cat_file(self.ConfigFile, self.getConfig())
-					self.funcs_del()
+					self.clear_handlers()
 					answer = AnsBase[4]
 				else:
 					answer = self.AnsBase[0]
@@ -296,7 +296,7 @@ class expansion_temp(expansion):
 			desc = eval(get_file(self.ConfigFile))
 			self.RootDir, self.On = desc.get("dir", self.RootDir), desc.get("enabled", False)
 			if not self.On:
-				self.funcs_del()
+				self.clear_handlers()
 			if not os.path.isdir(self.RootDir):
 				try:
 					os.makedirs(self.RootDir, 0755)
@@ -323,9 +323,7 @@ class expansion_temp(expansion):
 					with database(ldir) as db:
 						db("create table chatlogs (year integer, month integer, day integer, time text, nick text, jid text, data text, mode integer)")
 						db.commit()
-				if not ChatsAttrs.has_key(chat):
-					ChatsAttrs[chat] = {}
-				ChatsAttrs[chat]["ldir"], self.loggerDesc[chat] = ldir, iThr.Semaphore()
+				ChatsAttrs.setdefault(chat, {})["ldir"], self.loggerDesc[chat] = ldir, ithr.Semaphore()
 
 	def logger_04si(self, chat):
 #		if not check_nosimbols(chat):
@@ -348,7 +346,7 @@ class expansion_temp(expansion):
 		(command_logs, "logs", 2,),
 		(command_logger_state, "logger", 6,),
 		(command_logger_control, "logger2", 8,)
-					)
+	)
 
 	handlers = (
 		(logger_00si, "00si"),
@@ -361,4 +359,4 @@ class expansion_temp(expansion):
 		(logger_06eh, "06eh"),
 		(logger_07eh, "07eh"),
 		(logger_08eh, "08eh")
-					)
+	)

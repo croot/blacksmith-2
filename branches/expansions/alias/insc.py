@@ -33,7 +33,7 @@ if DefLANG in ("RU", "UA"):
 		"Макро «%s» разрешено.", # 28
 		"Макро «%s» запрещено.", # 29
 		"Нет запрещенных макро." # 30
-					)])
+	)])
 else:
 	AnsBase_temp = (
 		"Alias disabled.", # 0
@@ -67,4 +67,4 @@ else:
 		"Macro '%s' allowed.", # 28
 		"Macro '%s' forbidden.", # 29
 		"There are no forbidden macro." # 30
-					)
+	)

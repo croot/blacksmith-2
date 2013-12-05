@@ -1,9 +1,9 @@
 # coding: utf-8
 
 #  BlackSmith mark.2
-# exp_name = "invite_join" # /code.py v.x6
-#  Id: 08~5c
-#  Code © (2009-2012) by WitcherGeralt [alkorgun@gmail.com]
+# exp_name = "invite_join" # /code.py v.x7
+#  Id: 08~6c
+#  Code © (2009-2013) by WitcherGeralt [alkorgun@gmail.com]
 
 class expansion_temp(expansion):
 
@@ -19,10 +19,12 @@ class expansion_temp(expansion):
 			if Numb.plus() >= 50:
 				break
 
+	compile_chat = compile__("^[^\s'\"@<>&]+?@(?:conference|muc|conf|chat|group)\.[\w-]+?\.[\.\w-]+?$")
+
 	def get_invite(self, stanza, isConf, stype, source, body, isToBs, disp):
-		if not isConf and Types[2] == stanza.getType():
+		if not isConf and sBase[2] == stanza.getType():
 			conf = source[1].lower()
-			if conf.count("@") and conf.count(".") >= 2:
+			if self.compile_chat.match(conf):
 				for node in stanza.getTags("x", namespace = xmpp.NS_MUC_USER):
 					for node in node.getTags("invite"):
 						inst = (node.getAttr("from"))
@@ -38,7 +40,7 @@ class expansion_temp(expansion):
 									except:
 										confname = None
 								if confname:
-									codename, disp_, cPref, nick, body = None, None, None, DefNick, Node.getTagData("reason")
+									codename, disp_, cPref, nick, body = None, None, None, DefNick, node.getTagData("reason")
 									if body:
 										ls = body.split()
 										while ls:

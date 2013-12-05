@@ -24,7 +24,7 @@ if DefLANG in ("RU", "UA"):
 		"Тебя нет в списке владельцев '%s', тебе нельзя копировать её настройки.", # 19
 		"Не могу проверить твои полномочия по списку владельцев '%s'.", # 20
 		"Конференцию можно копировать не чаще раза в сутки! (Осталось: %s)" # 21
-					)])
+	)])
 else:
 	AnsBase_temp = (
 		"Backup of the subject is not created.", # 0
@@ -49,4 +49,4 @@ else:
 		"Your JID not in owners list of '%s', you can't copy it's options.", # 19
 		"I can't check your access by owners list of '%s'.", # 20
 		"A conference can't be copied often than the one time in a day! (Remain: %s)" # 21
-					)
+	)

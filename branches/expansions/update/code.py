@@ -30,9 +30,9 @@ class expansion_temp(expansion):
 				fp = Opener.open()
 				data = fp.read()
 				fp.close()
-			except Web.Two.HTTPError, exc:
+			except Web.Two.HTTPError as exc:
 				errors.append((link, str(exc)))
-			except Exception, exc:
+			except Exception as exc:
 				errors.append((link, exc_str(exc)))
 			else:
 				for li in self.compile_svn_links.findall(data):
@@ -43,9 +43,9 @@ class expansion_temp(expansion):
 				fp = Opener.open()
 				info = fp.info()
 				fp.close()
-			except Web.Two.HTTPError, exc:
+			except Web.Two.HTTPError as exc:
 				errors.append((link, str(exc)))
-			except Exception, exc:
+			except Exception as exc:
 				errors.append((link, exc_str(exc)))
 			else:
 				size = int(info.get("Content-Length", -1))
@@ -57,11 +57,11 @@ class expansion_temp(expansion):
 						os.makedirs(folder)
 					try:
 						filename = Opener.download(file)[0]
-					except Web.Two.HTTPError, exc:
+					except Web.Two.HTTPError as exc:
 						errors.append((link, str(exc)))
-					except SelfExc, exc:
+					except SelfExc as exc:
 						errors.append((link, exc[0].capitalize()))
-					except Exception, exc:
+					except Exception as exc:
 						errors.append((link, exc_str(exc)))
 					else:
 						done.append("%s\t%s" % (("U" if exists else "A"), filename))
@@ -86,7 +86,7 @@ class expansion_temp(expansion):
 			errors = []
 			try:
 				self.update(answer, errors, link, len(link))
-			except Exception, exc:
+			except Exception as exc:
 				answer.append(chr(10) + exc_str(exc))
 			if errors:
 				answer.append("\nSome errors happened:\n")
