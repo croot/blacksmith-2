@@ -26,7 +26,7 @@ class expansion_temp(expansion):
 		"мемберов".decode("utf-8"): 2,
 		"outcasts": 3,
 		"баны".decode("utf-8"): 3
-					}
+	}
 
 	def get_backup(self, folder):
 		backups = []
@@ -94,8 +94,8 @@ class expansion_temp(expansion):
 						timer, uTime, tdesc = self.get_timer(conf, "opts")
 						if timer >= 3600:
 							tdesc["opts"] = uTime
-							iq = xmpp.Iq(Types[9], to = conf)
-							query = iq.addChild(Types[18], namespace = xmpp.NS_MUC_OWNER)
+							iq = xmpp.Iq(sBase[9], to = conf)
+							query = iq.addChild(sBase[18], namespace = xmpp.NS_MUC_OWNER)
 							query.addChild(node = form)
 							iq.setID("Bs-i%d" % Info["outiq"].plus())
 							CallForResponse(Chat.disp, iq, self.answer_accept_opts, {"date": date, "stype": stype, "source": source})
@@ -138,11 +138,11 @@ class expansion_temp(expansion):
 								data = line.pop(0)
 								if data == disp_str:
 									continue
-								iq = xmpp.Iq(Types[9], to = conf)
+								iq = xmpp.Iq(sBase[9], to = conf)
 								iq.setID("Bs-i%d" % Info["outiq"].plus())
-								query = xmpp.Node(Types[18])
+								query = xmpp.Node(sBase[18])
 								query.setNamespace(xmpp.NS_MUC_ADMIN)
-								arole = query.addChild("item", {Types[11]: data, aRoles[0]: role})
+								arole = query.addChild("item", {sBase[11]: data, aRoles[0]: role})
 								if line:
 									arole.setTagData("reason", line[0])
 								iq.addChild(node = query)
@@ -158,7 +158,7 @@ class expansion_temp(expansion):
 			else:
 				answer.append(self.AnsBase[2] % role)
 
-	restoreLock = iThr.allocate_lock()
+	restoreLock = ithr.allocate_lock()
 
 	def command_backup(self, stype, source, body, disp):
 		if Chats.has_key(source[1]):
@@ -181,13 +181,13 @@ class expansion_temp(expansion):
 						timer, uTime, tdesc = self.get_timer(source[1], "make")
 						if timer >= 3600:
 							tdesc["make"] = uTime
-							iq = xmpp.Iq(Types[10], to = source[1])
-							iq.addChild(Types[18], namespace = xmpp.NS_MUC_OWNER)
+							iq = xmpp.Iq(sBase[10], to = source[1])
+							iq.addChild(sBase[18], namespace = xmpp.NS_MUC_OWNER)
 							iq.setID("Bs-i%d" % Info["outiq"].plus())
 							CallForResponse(disp, iq, self.answer_backup_opts, {"stype": stype, "source": source})
 							for role in self.affs:
-								iq = xmpp.Iq(Types[10], to = source[1])
-								query = xmpp.Node(Types[18])
+								iq = xmpp.Iq(sBase[10], to = source[1])
+								query = xmpp.Node(sBase[18])
 								query.setNamespace(xmpp.NS_MUC_ADMIN)
 								query.addChild("item", {aRoles[0]: role})
 								iq.addChild(node = query)
@@ -258,8 +258,8 @@ class expansion_temp(expansion):
 												cat_file(chat_file(chat, self.CopyDateFile), str(uTime))
 											answer = str.join(chr(10), answer)
 										else:
-											iq = xmpp.Iq(Types[10], to = chat)
-											query = xmpp.Node(Types[18])
+											iq = xmpp.Iq(sBase[10], to = chat)
+											query = xmpp.Node(sBase[18])
 											query.setNamespace(xmpp.NS_MUC_ADMIN)
 											query.addChild("item", {aRoles[0]: self.affs[0]})
 											iq.addChild(node = query)
@@ -288,7 +288,7 @@ class expansion_temp(expansion):
 				answer = str.join(chr(10), answer)
 		else:
 			answer = AnsBase[0]
-		if locals().has_key(Types[6]):
+		if locals().has_key(sBase[6]):
 			Answer(answer, stype, source, disp)
 
 	filter = "muc#roomconfig_filter_jid"
@@ -411,21 +411,20 @@ class expansion_temp(expansion):
 			subjects = {
 				"list": backups,
 				"last": get_file("%s/%s" % (folder, max(backups))).decode("utf-8")
-							}
+			}
 		else:
 			subjects = {"list": [], "last": None}
-		if not ChatsAttrs.has_key(chat):
-			ChatsAttrs[chat] = {}
-		ChatsAttrs[chat]["backup"] = {"subjects": subjects, "flags": {}}
+		desc = ChatsAttrs.setdefault(chat, {})
+		desc["backup"] = {"subjects": subjects, "flags": {}}
 		filename = cefile(chat_file(chat, self.CopyDateFile))
 		if os.path.isfile(filename):
-			ChatsAttrs[chat]["backup"]["flags"]["copy"] = eval(get_file(filename))
+			desc["backup"]["flags"]["copy"] = eval(get_file(filename))
 
 	commands = (
 		(command_backup, "backup", 6,),
-					)
+	)
 
 	handlers = (
 		(init_backup, "01si"),
 		(subjects_backup, "09eh")
-					)
+	)

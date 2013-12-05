@@ -9,7 +9,7 @@ if DefLANG in ("RU", "UA"):
 		"Пароль для веб-страницы с логами: '%s'.", # 4
 		"Пароль не был задан.", # 5
 		"Просмотр логов в сети отныне разрешен без пароля." # 6
-					)])
+	)])
 else:
 	AnsBase_temp = (
 		"The logger is off.", # 0
@@ -19,4 +19,4 @@ else:
 		"Password for the Web interface: '%s'.", # 4
 		"Password has not been set.", # 5
 		"Viewing of logs from the Web allowed without a password." # 6
-					)
+	)

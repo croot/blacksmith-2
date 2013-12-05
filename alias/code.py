@@ -34,7 +34,7 @@ class expansion_temp(expansion):
 		"nick": {},
 		"role": {},
 		"status": {}
-					}
+	}
 
 	AliasDesc = Template.copy()
 	ChatAliasDesc = {}
@@ -58,19 +58,19 @@ class expansion_temp(expansion):
 		"len_more": lambda attr, clause: (len(attr) > clause),
 		"len_less": lambda attr, clause: (len(attr) < clause),
 		"re": lambda attr, clause: clause.search(attr)
-					}
+	}
 
 	funcs = {
-		"outcast": (sConf.outcast, Types[11]),
-		"none": (sConf.none, Types[11]),
-		"member": (sConf.member, Types[11]),
-		"admin": (sConf.admin, Types[11]),
-		"owner": (sConf.owner, Types[11]),
-		"kick": (sConf.kick, Types[12]),
-		"visitor": (sConf.visitor, Types[12]),
-		"participant": (sConf.participant, Types[12]),
-		"moder": (sConf.moder, Types[12])
-					}
+		"outcast": (sConf.outcast, sBase[11]),
+		"none": (sConf.none, sBase[11]),
+		"member": (sConf.member, sBase[11]),
+		"admin": (sConf.admin, sBase[11]),
+		"owner": (sConf.owner, sBase[11]),
+		"kick": (sConf.kick, sBase[12]),
+		"visitor": (sConf.visitor, sBase[12]),
+		"participant": (sConf.participant, sBase[12]),
+		"moder": (sConf.moder, sBase[12])
+	}
 
 	flags = ("strip", "lower", "layout")
 
@@ -125,7 +125,7 @@ class expansion_temp(expansion):
 				answer = AnsBase[19] % (self.name)
 		else:
 			answer = AnsBase[10]
-		if locals().has_key(Types[6]):
+		if locals().has_key(sBase[6]):
 			Answer(answer, stype, source, disp)
 
 	def __call__(self, chat, isConf, macro, *args):
@@ -153,10 +153,10 @@ class expansion_temp(expansion):
 				if cmd.isAvalable and cmd.handler:
 					source = ("%s/%s" % (chat.name, chat.nick), chat.name, chat.nick)
 					Info["cmd"].plus()
-					sThread(self.alias, cmd.handler, (cmd.exp, Vars.get("stype", Types[1]), source, body, chat.disp), cmd.name)
+					sThread(self.alias, cmd.handler, (cmd.exp, Vars.get("stype", sBase[1]), source, body, chat.disp), cmd.name)
 					cmd.numb.plus()
 		elif atype == self.message:
-			if func == Types[0]:
+			if func == sBase[0]:
 				source = chat.name
 			else:
 				source = "%s/%s" % (chat.name, Vars["nick"])
@@ -180,7 +180,7 @@ class expansion_temp(expansion):
 		flags[0]: unicode.strip,
 		flags[1]: unicode.lower,
 		flags[2]: (lambda attr: sub_desc(attr.lower(), self.eqMap))
-					}
+	}
 
 	def prepare(self, attr, flags):
 		if not flags:
@@ -224,7 +224,7 @@ class expansion_temp(expansion):
 
 	def alias_01eh(self, stanza, isConf, stype, source, body, isToBs, disp):
 		if isConf:
-			if isToBs and stype == Types[1]:
+			if isToBs and stype == sBase[1]:
 				body = body.split(None, 1)
 				if len(body) > 1:
 					body = body[1]
@@ -237,7 +237,7 @@ class expansion_temp(expansion):
 					role, jid = "%s/%s" % user.role, user.source
 				else:
 					role, jid = None, None
-				if body.startswith("/me") and len(body) > 3 and stype == Types[0]:
+				if body.startswith("/me") and len(body) > 3 and stype == sBase[0]:
 					body = body[3:].lstrip()
 					event = "/me"
 				else:
@@ -262,8 +262,8 @@ class expansion_temp(expansion):
 				caps_ver = None
 			show = stanza.getShow()
 			status = stanza.getStatus()
-			iq = xmpp.Iq(Types[10], to = "%s/%s" % (chat, nick))
-			iq.addChild(Types[18], namespace = xmpp.NS_VERSION)
+			iq = xmpp.Iq(sBase[10], to = "%s/%s" % (chat, nick))
+			iq.addChild(sBase[18], namespace = xmpp.NS_VERSION)
 			iq.setID("Bs-i%d" % Info["outiq"].plus())
 			CallForResponse(disp, iq, self.alias_vhandler, {"chat": chat, "nick": nick, "jid": jid, "role": role})
 			self.process(chat, "join", locals())
@@ -336,7 +336,7 @@ class expansion_temp(expansion):
 		"nick": ("jid", "nick", "old_nick", "role"),
 		"role": ("jid", "nick", "role"),
 		"status": ("jid", "nick", "role", "show", "status")
-					}
+	}
 
 	validDesc = {
 		"alias": ("\t", "\n", "\r", " ", "(chat)s", "(nick)s"),
@@ -352,7 +352,7 @@ class expansion_temp(expansion):
 		"nick": ("(jid)s", "(old_nick)s", "(role)s"),
 		"role": ("(jid)s", "(role)s"),
 		"status": ("(jid)s", "(role)s", "(show)s", "(status)s")
-					}
+	}
 
 	def checkAttr(self, event, attr, cond):
 		if cond == self.null:
@@ -459,7 +459,7 @@ class expansion_temp(expansion):
 					Macro.__call__ = self.__call__
 					Macro.__contains__ = self.__contains__
 					for inst, ls in self.handlers:
-						self.handler_register(getattr(self, inst.func_name), ls)
+						self.handler_register(getattr(self, inst.__name__), ls)
 					answer = AnsBase[4]
 			else:
 				answer = AnsBase[10]
@@ -468,7 +468,7 @@ class expansion_temp(expansion):
 				if self.On:
 					self.On = False
 					self.save_alias(True, source[1])
-					self.funcs_del(); self.auto_clear()
+					self.clear_handlers(); self.auto_clear()
 					answer = AnsBase[4]
 				else:
 					answer = self.AnsBase[3]
@@ -720,7 +720,7 @@ class expansion_temp(expansion):
 					answer = self.AnsBase[22]
 			else:
 				answer = AnsBase[2]
-		elif not locals().has_key(Types[6]):
+		elif not locals().has_key(sBase[6]):
 			ls, cmds = [], []
 			for event, aliases in desc.iteritems():
 				if event == self.macro:
@@ -830,7 +830,7 @@ class expansion_temp(expansion):
 				Macro.__call__ = self.__call__
 				Macro.__contains__ = self.__contains__
 			else:
-				self.funcs_del()
+				self.clear_handlers()
 		if not os.path.isfile(self.MacroHelpBase):
 			with database(self.MacroHelpBase) as db:
 				db("create table macro (name text, help text)")
@@ -860,7 +860,7 @@ class expansion_temp(expansion):
 	commands = (
 		(command_alias, alias, 6,),
 		(command_macro, macro, 1,)
-					)
+	)
 
 	handlers = (
 		(alias_00si, "00si"),
@@ -873,4 +873,4 @@ class expansion_temp(expansion):
 		(alias_06eh, "06eh"),
 		(alias_07eh, "07eh"),
 		(alias_08eh, "08eh")
-					)
+	)
