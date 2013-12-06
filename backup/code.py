@@ -1,8 +1,8 @@
 # coding: utf-8
 
 #  BlackSmith mark.2
-# exp_name = "backup" # /code.py v.x2
-#  Id: 36~2c
+# exp_name = "backup" # /code.py v.x3
+#  Id: 36~3c
 #  Code © (2012-2013) by WitcherGeralt [alkorgun@gmail.com]
 
 class expansion_temp(expansion):
@@ -310,9 +310,7 @@ class expansion_temp(expansion):
 								if var != self.filter:
 									ftype = field.getAttr("type")
 									value = field.getTagData("value") or str()
-									field = form.setField(var)
-									field.setType(ftype)
-									field.setValue(value)
+									field = form.setField(var, value, ftype)
 				form = str(form)
 				cat_file("%s/%s" % (folder, time.time()), form.replace("><", ">\r\n<"))
 				ls = self.get_backup(folder)
