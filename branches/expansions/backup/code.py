@@ -34,7 +34,7 @@ class expansion_temp(expansion):
 			for file in os.listdir(folder):
 				try:
 					backups.append(float(file))
-				except:
+				except ValueError:
 					pass
 		return backups
 
@@ -88,7 +88,7 @@ class expansion_temp(expansion):
 				else:
 					try:
 						form = xmpp.simplexml.XML2Node(get_file(filename))
-					except:
+					except Exception:
 						answer.append(self.AnsBase[11])
 					else:
 						timer, uTime, tdesc = self.get_timer(conf, "opts")
@@ -216,7 +216,7 @@ class expansion_temp(expansion):
 											date = float(ls.pop(0))
 										else:
 											date = None
-									except:
+									except ValueError:
 										answer = self.AnsBase[2]
 									else:
 										answer = []
@@ -326,7 +326,7 @@ class expansion_temp(expansion):
 			folder = cefile(chat_file(source[1], (self.BackupFolder + role + "s")))
 			try:
 				if not os.path.isdir(folder): os.makedirs(folder, 0755)
-			except:
+			except Exception:
 				answer = AnsBase[2]
 			else:
 				jids = []
@@ -390,7 +390,7 @@ class expansion_temp(expansion):
 			folder = cefile(chat_file(chat, self.SubjectsFolder))
 			try:
 				if not os.path.isdir(folder): os.makedirs(folder, 0755)
-			except:
+			except Exception:
 				pass
 			else:
 				uTime = time.time()

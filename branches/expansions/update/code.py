@@ -16,7 +16,7 @@ class expansion_temp(expansion):
 	def last_rev(self, answer, link):
 		try:
 			answer.append(get_text(Web(link).get_page(), "<title>", "</title>"))
-		except:
+		except Exception:
 			pass
 
 	compile_svn_links = compile__("<li><a href=\".+?\">(.+?)</a></li>")
