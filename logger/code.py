@@ -268,7 +268,7 @@ class expansion_temp(expansion):
 				folder = os.path.normpath(ls.pop(0))
 				try:
 					if not os.path.isdir(folder): os.makedirs(folder, 0755)
-				except:
+				except Exception:
 					answer = AnsBase[2]
 				else:
 					file = os.path.join(self.RootDir, self.ChatsCache)
@@ -300,7 +300,7 @@ class expansion_temp(expansion):
 			if not os.path.isdir(self.RootDir):
 				try:
 					os.makedirs(self.RootDir, 0755)
-				except:
+				except Exception:
 					Print("\n\nCan't make logger's root folder! I'll disable the expansion.", color2)
 					self.dels(True)
 

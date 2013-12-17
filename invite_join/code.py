@@ -37,7 +37,7 @@ class expansion_temp(expansion):
 								if not os.path.exists(confname):
 									try:
 										os.makedirs(confname, 0755)
-									except:
+									except Exception:
 										confname = None
 								if confname:
 									codename, disp_, cPref, nick, body = None, None, None, DefNick, node.getTagData("reason")
@@ -84,7 +84,7 @@ class expansion_temp(expansion):
 								if not os.path.exists(confname):
 									try:
 										os.makedirs(confname, 0755)
-									except:
+									except Exception:
 										confname = None
 								if confname:
 									if conf.endswith("@conference.qip.ru"):

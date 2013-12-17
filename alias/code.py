@@ -84,7 +84,7 @@ class expansion_temp(expansion):
 	def sub_rand(self, obj):
 		try:
 			number = str(randrange(*[int(numb) for numb in obj.groups()]))
-		except:
+		except Exception:
 			number = "0"
 		return number
 
@@ -403,7 +403,7 @@ class expansion_temp(expansion):
 			return self.cmd_names
 		try:
 			cmds = eval(get_file(os.path.join(self.path, "alias.name")).decode("utf-8")).values()
-		except:
+		except Exception:
 			cmds = []
 		cmds = set([cmd.decode("utf-8") for cmd in cmds] + [self.alias])
 		self.cmd_names = cmds
@@ -601,7 +601,7 @@ class expansion_temp(expansion):
 																						if conds[numb] == "re":
 																							try:
 																								compile__(clause)
-																							except:
+																							except Exception:
 																								answer = self.AnsBase[10]
 																								break
 																					else:
